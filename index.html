@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Sarvam Vaani — Voice AI</title>
+<meta name="description" content="A voice-first AI assistant for every Indian language, powered by Sarvam AI." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- animated aurora backdrop -->
+<div class="aurora" aria-hidden="true">
+  <span class="blob b1"></span>
+  <span class="blob b2"></span>
+  <span class="blob b3"></span>
+  <span class="grain"></span>
+</div>
+
+<div class="app">
+
+  <!-- ── top bar ─────────────────────────────────────────── -->
+  <header class="topbar glass">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff7a18"/><stop offset=".5" stop-color="#ff2d78"/>
+            <stop offset="1" stop-color="#7b5cff"/></linearGradient></defs>
+          <path fill="url(#lg)" d="M16 2a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z"/>
+          <circle cx="16" cy="16" r="4.5" fill="url(#lg)"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>Sarvam Vaani</h1>
+        <p>voice AI · भारत की हर भाषा में</p>
+      </div>
+    </div>
+
+    <div class="top-actions">
+      <label class="select-wrap" title="Recognition &amp; reply language">
+        <select id="langSelect" aria-label="Language"></select>
+      </label>
+      <button id="speakToggle" class="icon-btn active" title="Speak replies aloud">
+        <span class="ico">🔊</span>
+      </button>
+      <button id="settingsBtn" class="icon-btn" title="Settings">
+        <span class="ico">⚙️</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── chat ────────────────────────────────────────────── -->
+  <main id="chat" class="chat" aria-live="polite"></main>
+
+  <!-- ── live transcription strip ────────────────────────── -->
+  <div id="livebar" class="livebar hidden">
+    <div class="wave"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="live-text"><span id="liveText">Listening…</span></div>
+    <button id="liveStop" class="mini-btn">Done</button>
+  </div>
+
+  <!-- ── composer ────────────────────────────────────────── -->
+  <footer class="composer glass">
+    <textarea id="input" rows="1" placeholder="Type, or tap the mic and just speak…"></textarea>
+    <button id="mic" class="mic" title="Speak">
+      <span class="ring"></span>
+      <span class="mic-ico">🎙️</span>
+    </button>
+    <button id="send" class="send" title="Send">
+      <span>➤</span>
+    </button>
+  </footer>
+
+</div>
+
+<!-- ── settings drawer ───────────────────────────────────── -->
+<aside id="drawer" class="drawer">
+  <div class="drawer-head">
+    <h2>Settings</h2>
+    <button id="closeDrawer" class="icon-btn">✕</button>
+  </div>
+  <div class="drawer-body">
+    <label class="field">
+      <span>Chat model</span>
+      <select id="modelSelect"></select>
+    </label>
+    <label class="field">
+      <span>Voice (speaker)</span>
+      <select id="speakerSelect"></select>
+    </label>
+    <label class="field">
+      <span>Speech recognition mode</span>
+      <select id="sttMode">
+        <option value="transcribe">Transcribe (same language)</option>
+        <option value="codemix">Code-mix (Hindi + English)</option>
+        <option value="translit">Transliterate (Roman script)</option>
+        <option value="translate">Translate to English</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>Segment length (live)</span>
+      <input id="segLen" type="range" min="1200" max="4000" step="200" value="2200" />
+      <small id="segLenVal">2.2s</small>
+    </label>
+    <div class="field-row">
+      <button id="clearBtn" class="ghost-btn">Clear chat</button>
+    </div>
+    <p class="hint">Recognition and speech use Sarvam AI. Set <code>SARVAM_API_KEY</code> in
+      <code>backend/.env</code> to switch off demo mode.</p>
+  </div>
+</aside>
+<div id="scrim" class="scrim"></div>
+
+<div id="toast" class="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
