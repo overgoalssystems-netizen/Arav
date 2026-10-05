@@ -1,0 +1,24 @@
+# Render Blueprint — deploy the whole app (frontend + backend) as one service.
+# Push this repo to GitHub, then in Render choose "New +" -> "Blueprint"
+# and point it at the repo. Render reads this file automatically.
+services:
+  - type: web
+    name: sarvam-voice-ai
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: uvicorn app:app --app-dir backend --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.6"
+      # Set your real key in the Render dashboard (Environment tab).
+      # `sync: false` keeps it out of the repo and prompts you in the UI.
+      - key: SARVAM_API_KEY
+        sync: false
+      - key: CHAT_MODEL
+        value: sarvam-105b
+      - key: STT_MODEL
+        value: saaras:v3
+      - key: TTS_MODEL
+        value: bulbul:v3
